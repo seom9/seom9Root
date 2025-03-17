@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+</head>
+<body>
+<h1>게시판</h1>
+<ul id="boardList"></ul>
+
+<h2>게시글 작성</h2>
+<input type="text" id="title" placeholder="제목">
+<textarea id="content" placeholder="내용"></textarea>
+<input type="text" id="author" placeholder="작성자">
+<button onclick="addBoard()">등록</button>
+
+<script>
+  async function fetchBoards() {
+    const response = await fetch('/api/boards');
+    const boards = await response.json();
+    const boardList = document.getElementById('boardList');
+    boardList.innerHTML = '';
+    boards.forEach(board => {
+      const li = document.createElement('li');
+      li.textContent = `${board.title} - ${board.author}`;
+      boardList.appendChild(li);
+    });
+  }
+
+  async function addBoard() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+    const author = document.getElementById('author').value;
+
+    const response = await fetch('/api/boards', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, content, author })
+    });
+
+    if (response.ok) {
+      document.getElementById('title').value = '';
+      document.getElementById('content').value = '';
+      document.getElementById('author').value = '';
+      fetchBoards();
+    }
+  }
+
+  fetchBoards();
+</script>
+</body>
+</html>
