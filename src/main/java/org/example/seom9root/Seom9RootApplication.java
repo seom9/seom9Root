@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Seom9RootApplication {
     public static void main(String[] args) {
-        // seom9 push
+        // seom9 pushxxxx
         SpringApplication.run(Seom9RootApplication.class, args);
     }
 }
