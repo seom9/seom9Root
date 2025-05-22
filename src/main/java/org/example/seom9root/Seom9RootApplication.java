@@ -9,5 +9,4 @@ public class Seom9RootApplication {
     public static void main(String[] args) {
         SpringApplication.run(Seom9RootApplication.class, args);
     }
-
 }

@@ -1,9 +1,9 @@
-package org.example.seom9root.dto;
+package org.example.seom9root.dto.board;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.example.seom9root.domain.Board;
+import org.example.seom9root.domain.board.Board;
 
 import java.time.LocalDateTime;
 

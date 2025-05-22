@@ -1,4 +1,4 @@
-package org.example.seom9root.domain;
+package org.example.seom9root.domain.board;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
