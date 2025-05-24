@@ -1,0 +1,56 @@
+package org.example.seom9root.dto.study;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import org.example.seom9root.domain.study.StudyUser;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+public class StudyUserDTO {
+
+    private Long id;
+
+    private String name;
+
+    private String gitHub;
+
+    private int careerYear;
+
+    private String jobTitle;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime deletedAt;
+
+    public static StudyUserDTO fromEntity(StudyUser studyUser) {
+        return StudyUserDTO.builder()
+                .id(studyUser.getId())
+                .name(studyUser.getName())
+                .gitHub(studyUser.getGitHub())
+                .careerYear(studyUser.getCareerYear())
+                .jobTitle(studyUser.getJobTitle())
+                .createdAt(studyUser.getCreatedAt())
+                .updatedAt(studyUser.getUpdatedAt())
+                .deletedAt(studyUser.getDeletedAt())
+                .build();
+    }
+
+    public StudyUser toEntity() {
+        return StudyUser.builder()
+                .name(this.name)
+                .gitHub(this.gitHub)
+                .careerYear(this.careerYear)
+                .jobTitle(this.jobTitle)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
+                .deletedAt(this.deletedAt)
+                .build();
+    }
+
+}

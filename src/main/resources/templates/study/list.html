@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Study User List</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f7fa;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .user-table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background-color: #ffffff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .user-table th, .user-table td {
+      padding: 14px 20px;
+      text-align: left;
+    }
+
+    .user-table th {
+      background-color: #f0f2f5;
+      color: #555;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .user-table tr:not(:last-child) {
+      border-bottom: 1px solid #e6e8eb;
+    }
+
+    .user-table td {
+      color: #333;
+      font-size: 15px;
+    }
+
+    .user-table tr:hover {
+      background-color: #f9fbff;
+    }
+
+    .insert-button-wrapper {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .insert-button {
+      font-size: 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      cursor: pointer;
+    }
+
+    .insert-input-row input {
+      width: 95%;
+      padding: 6px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .submit-all-button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-all-button:hover {
+      background-color: #145ea8;
+      transform: translateY(-1px);
+    }
+
+    .submit-all-button:active {
+      background-color: #0d3f7a;
+      transform: translateY(0);
+    }
+
+
+    .delete-button {
+      background-color: #e53935;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .delete-button:hover {
+      background-color: #c62828;
+      transform: translateY(-1px);
+    }
+
+    .delete-button:active {
+      background-color: #b71c1c;
+      transform: translateY(0);
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>Study User List</h1>
+
+<table class="user-table" id="userTable">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>GitHub</th>
+    <th>Career Year</th>
+    <th>Job Title</th>
+    <th>Created At</th>
+  </tr>
+  </thead>
+  <tbody id="userTableBody">
+  <tr>
+    <td>홍길동</td>
+    <td>@hong</td>
+    <td>3</td>
+    <td>백엔드</td>
+    <td>2024-05-01</td>
+  </tr>
+  <!-- 입력 행은 JS로 추가 -->
+  </tbody>
+</table>
+
+<!-- 모두 등록 버튼: 테이블 아래, 오른쪽 정렬 -->
+<div style="width: 80%; margin: 16px auto 0 auto; text-align: right;">
+  <button id="submitAllButton" onclick="submitAllRows()" class="submit-all-button" style="display: none;">
+    모두 등록
+  </button>
+</div>
+
+<!-- 플러스 버튼 : s -->
+<div class="insert-button-wrapper">
+  <button class="insert-button" onclick="addInputRow()">+</button>
+</div>
+
+<script>
+  let inputRowCount = 0;
+
+  function addInputRow() {
+    const tbody = document.getElementById('userTableBody');
+
+    const row = document.createElement('tr');
+    row.classList.add('insert-input-row');
+
+    row.innerHTML = `
+    <td><input type="text" name="name" placeholder="이름"></td>
+    <td><input type="text" name="gitHub" placeholder="@github"></td>
+    <td><input type="number" name="careerYear" placeholder="연차"></td>
+    <td><input type="text" name="jobTitle" placeholder="직무"></td>
+    <td><button class="delete-button" onclick="deleteRow(this)">삭제</button></td>
+  `;
+
+    tbody.appendChild(row);
+    updateSubmitAllVisibility(); // ← 추가
+  }
+
+  function deleteRow(button) {
+    const row = button.closest('tr');
+    row.remove();
+    updateSubmitAllVisibility(); // ← 추가
+  }
+
+  function updateSubmitAllVisibility() {
+    const inputRows = document.querySelectorAll('.insert-input-row');
+    const submitBtn = document.getElementById('submitAllButton');
+
+    if (inputRows.length > 0) {
+      submitBtn.style.display = 'inline-block';
+    } else {
+      submitBtn.style.display = 'none';
+    }
+  }
+
+  function submitAllRows() {
+    const rows = document.querySelectorAll('.insert-input-row');
+    const dataList = [];
+
+    for (const row of rows) {
+      const name = row.querySelector('[name="name"]').value.trim();
+      const gitHub = row.querySelector('[name="gitHub"]').value.trim();
+      const careerYear = parseInt(row.querySelector('[name="careerYear"]').value.trim());
+      const jobTitle = row.querySelector('[name="jobTitle"]').value.trim();
+
+      if (!name || !gitHub || isNaN(careerYear) || !jobTitle) {
+        alert("모든 입력란을 채워주세요!");
+        return;
+      }
+
+      dataList.push({
+        name,
+        gitHub,
+        careerYear,
+        jobTitle
+      });
+    }
+
+    fetch('/study/user/input', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataList)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("저장 완료!");
+        location.reload(); // 또는 append 방식으로도 가능
+      } else {
+        return response.text().then(msg => { throw new Error(msg); });
+      }
+    })
+    .catch(err => {
+      alert("에러 발생: " + err.message);
+    });
+  }
+</script>
+
+
+</body>
+</html>

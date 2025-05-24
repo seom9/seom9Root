@@ -19,3 +19,9 @@ spring:
     minimum-idle: 2
     idle-timeout: 30000
     connection-timeout: 20000
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: false      # 🔥 캐시 끄기
+    encoding: UTF-8
