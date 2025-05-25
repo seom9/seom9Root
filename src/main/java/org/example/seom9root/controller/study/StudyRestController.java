@@ -1,6 +1,7 @@
 package org.example.seom9root.controller.study;
 
 import lombok.RequiredArgsConstructor;
+import org.example.seom9root.dto.common.ApiResponse;
 import org.example.seom9root.dto.study.StudyUserDTO;
 import org.example.seom9root.service.study.StudyService;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,13 @@ import java.util.Map;
 @RequestMapping("/study")
 public class StudyRestController {
 
-    final StudyService studyService;
+    private final StudyService studyService;
 
     @PostMapping("/user/input")
     public ResponseEntity<?> input(@RequestBody List<StudyUserDTO> users) {
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("success", true);
-        result.put("message", users.size() + "명 등록 완료");
 
-        return ResponseEntity.ok(result);
+
+        return ResponseEntity.ok(new ApiResponse(true, users.size() + "명 등록 완료"));
     }
 }
