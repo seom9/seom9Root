@@ -132,24 +132,36 @@
 <table class="user-table" id="userTable">
   <thead>
   <tr>
+    <th>No.</th>
     <th>Name</th>
     <th>GitHub</th>
     <th>Career Year</th>
     <th>Job Title</th>
     <th>Created At</th>
+    <th>Checked</th>
   </tr>
   </thead>
   <tbody id="userTableBody">
-  <tr>
-    <td>홍길동</td>
-    <td>@hong</td>
-    <td>3</td>
-    <td>백엔드</td>
-    <td>2024-05-01</td>
-  </tr>
-  <!-- 입력 행은 JS로 추가 -->
+    <tr th:each="user, iterStat : ${users}">
+      <td th:text="${iterStat.count}"></td> <!-- 순번 -->
+      <td th:text="${user.name}"></td>
+      <td th:text="${user.gitHub}"></td>
+      <td th:text="${user.careerYear}"></td>
+      <td th:text="${user.jobTitle}"></td>
+      <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}"></td>
+      <td>
+        <input type="checkbox" class="attendance-check" th:value="${user.id}">
+      </td>
+    </tr>
   </tbody>
 </table>
+
+<!-- 모두 등록 버튼: 테이블 아래, 오른쪽 정렬 -->
+<div style="width: 80%; margin: 16px auto 0 auto; text-align: right;">
+  <button id="submitCheckToday" onclick="submitAllRows()" class="submit-all-button" style="display: none;">
+    모두 등록
+  </button>
+</div>
 
 <!-- 모두 등록 버튼: 테이블 아래, 오른쪽 정렬 -->
 <div style="width: 80%; margin: 16px auto 0 auto; text-align: right;">

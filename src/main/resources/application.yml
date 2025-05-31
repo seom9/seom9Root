@@ -5,23 +5,26 @@ spring:
     username: root
     password: rkgus78
     driver-class-name: org.mariadb.jdbc.Driver
-  # jpa 설정
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+
+  # JPA 설정
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
-      ddl-auto: update  # (create, update, validate, none 선택 가능)
+      ddl-auto: update  # create, update, validate, none 중 선택
     show-sql: true
     properties:
       hibernate:
         format_sql: true
-  datasource.hikari:
-    maximum-pool-size: 10
-    minimum-idle: 2
-    idle-timeout: 30000
-    connection-timeout: 20000
+
+  # Thymeleaf 설정
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
     mode: HTML
-    cache: false      # 🔥 캐시 끄기
+    cache: false
     encoding: UTF-8

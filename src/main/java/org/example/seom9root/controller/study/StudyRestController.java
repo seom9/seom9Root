@@ -23,9 +23,7 @@ public class StudyRestController {
 
     @PostMapping("/user/input")
     public ResponseEntity<?> input(@RequestBody List<StudyUserDTO> users) {
-
-
-
+        studyService.insertStudyUser(users);
         return ResponseEntity.ok(new ApiResponse(true, users.size() + "명 등록 완료"));
     }
 }

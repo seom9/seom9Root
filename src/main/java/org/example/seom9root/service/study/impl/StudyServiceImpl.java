@@ -7,7 +7,9 @@ import org.example.seom9root.repository.study.StudyRepository;
 import org.example.seom9root.service.study.StudyService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,13 +19,18 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public int insertStudyUser(List<StudyUserDTO> users) {
-        int cnt = 0;
         for (StudyUserDTO dto : users) {
-            StudyUser entity = studyRepository.save(dto.toEntity());
-            if (entity.getId() != null) { // 저장된 경우
-                cnt++;
-            }
+            StudyUser entity = studyRepository.save(dto.toInsertEntity());
         }
-        return cnt;
+        return 1;
     }
+
+    @Override
+    public List<StudyUserDTO> getStudyUsers() {
+        return studyRepository.findAll().stream()
+                .map(StudyUserDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+
 }

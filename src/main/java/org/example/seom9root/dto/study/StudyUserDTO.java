@@ -3,8 +3,10 @@ package org.example.seom9root.dto.study;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import org.example.seom9root.common.Common;
 import org.example.seom9root.domain.study.StudyUser;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -38,6 +40,16 @@ public class StudyUserDTO {
                 .createdAt(studyUser.getCreatedAt())
                 .updatedAt(studyUser.getUpdatedAt())
                 .deletedAt(studyUser.getDeletedAt())
+                .build();
+    }
+
+    public StudyUser toInsertEntity() {
+        return StudyUser.builder()
+                .name(this.name)
+                .gitHub(this.gitHub)
+                .careerYear(this.careerYear)
+                .jobTitle(this.jobTitle)
+                .createdAt(LocalDateTime.now())
                 .build();
     }
 
