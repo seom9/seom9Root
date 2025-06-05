@@ -100,6 +100,30 @@
     }
 
 
+    .study-check-button {
+      background-color: #4CAF50; /* 메인 그린 */
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .study-check-button:hover {
+      background-color: #43a047; /* hover: 조금 더 어두운 그린 */
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(76, 175, 80, 0.3); /* 초록 그림자 강조 */
+    }
+
+    .study-check-button:active {
+      background-color: #388e3c; /* active: 더 짙은 그린 */
+      transform: translateY(0);
+    }
+
     .delete-button {
       background-color: #e53935;
       color: white;
@@ -150,16 +174,18 @@
       <td th:text="${user.jobTitle}"></td>
       <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}"></td>
       <td>
-        <input type="checkbox" class="attendance-check" th:value="${user.id}">
+        <label>
+          <input type="checkbox" class="attendance-check" th:value="${user.id}">
+        </label>
       </td>
     </tr>
   </tbody>
 </table>
 
-<!-- 모두 등록 버튼: 테이블 아래, 오른쪽 정렬 -->
+<!-- 출석 체크 버튼 : 테이블 아래, 오른쪽 정렬 -->
 <div style="width: 80%; margin: 16px auto 0 auto; text-align: right;">
-  <button id="submitCheckToday" onclick="submitAllRows()" class="submit-all-button" style="display: none;">
-    모두 등록
+  <button id="submitCheckToday" onclick="studyCheck()" class="study-check-button">
+    출석 체크
   </button>
 </div>
 
@@ -185,10 +211,12 @@
     row.classList.add('insert-input-row');
 
     row.innerHTML = `
+    <td>+</td>
     <td><input type="text" name="name" placeholder="이름"></td>
     <td><input type="text" name="gitHub" placeholder="@github"></td>
     <td><input type="number" name="careerYear" placeholder="연차"></td>
     <td><input type="text" name="jobTitle" placeholder="직무"></td>
+    <td><input type="text" name="createdAt" placeholder="등록일"></td>
     <td><button class="delete-button" onclick="deleteRow(this)">삭제</button></td>
   `;
 
@@ -212,6 +240,18 @@
       submitBtn.style.display = 'none';
     }
   }
+
+  function updateCheckButtonVisibility() {
+    const inputRows = document.querySelectorAll('.insert-input-row');
+    const checkedBtn = document.getElementById('study-check-button');
+
+    if (inputRows.length > 0) {
+      checkedBtn.style.display = 'none';
+    } else {
+      checkedBtn.style.display = 'inline-block';
+    }
+  }
+
 
   function submitAllRows() {
     const rows = document.querySelectorAll('.insert-input-row');
@@ -252,6 +292,38 @@
     .catch(err => {
       alert("에러 발생: " + err.message);
     });
+  }
+
+
+  function studyCheck() {
+    const checkedBoxes = document.querySelectorAll('.attendance-check:checked');
+    const checkedIds = [];
+
+    checkedBoxes.forEach(box => {
+      checkedIds.push(box.value);
+    });
+
+    if (checkedIds.length === 0) {
+      alert("체크된 항목이 없습니다.");
+      return;
+    }
+
+    fetch('/study/user/checked', {
+      method : 'POST',
+      headers : { 'Content-type' : 'application/json' },
+      body : JSON.stringify(checkedIds)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert('출석 체크 완료!');
+        location.reload();
+      } else {
+        return response.text().then(msg => {throw new Error(msg);});
+      }
+    })
+    .catch (err => {
+      alert("에러 발생 : " + err.message);
+    })
   }
 </script>
 

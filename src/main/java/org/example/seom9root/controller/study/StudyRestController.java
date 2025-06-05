@@ -26,4 +26,10 @@ public class StudyRestController {
         studyService.insertStudyUser(users);
         return ResponseEntity.ok(new ApiResponse(true, users.size() + "명 등록 완료"));
     }
+
+    @PostMapping("/user/checked")
+    public ResponseEntity<?> check(@RequestBody List<Long> checkedIds) {
+        studyService.insetStudyChecked(checkedIds);
+        return ResponseEntity.ok(new ApiResponse(true, "출석 체크 완료"));
+    }
 }

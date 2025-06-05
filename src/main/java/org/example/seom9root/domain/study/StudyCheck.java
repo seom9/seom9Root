@@ -25,5 +25,14 @@ public class StudyCheck {
 
     private LocalDateTime createdAt;
 
-    private boolean checked;
+    public static StudyCheck toEntity(Long id) {
+        StudyUser userRef = StudyUser.builder()
+                .id(id)
+                .build();
+
+        return StudyCheck.builder()
+                .studyUser(userRef)
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 }

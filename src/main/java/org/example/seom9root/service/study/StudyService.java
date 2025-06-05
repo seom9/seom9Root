@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface StudyService {
 
-    public int insertStudyUser(List<StudyUserDTO> users);
+    public void insertStudyUser(List<StudyUserDTO> users);
 
     public List<StudyUserDTO> getStudyUsers();
+
+    public void insetStudyChecked(List<Long> checkedIds);
 }

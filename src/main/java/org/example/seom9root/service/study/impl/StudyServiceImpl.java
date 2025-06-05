@@ -1,8 +1,10 @@
 package org.example.seom9root.service.study.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.seom9root.domain.study.StudyCheck;
 import org.example.seom9root.domain.study.StudyUser;
 import org.example.seom9root.dto.study.StudyUserDTO;
+import org.example.seom9root.repository.study.StudyCheckRepository;
 import org.example.seom9root.repository.study.StudyRepository;
 import org.example.seom9root.service.study.StudyService;
 import org.springframework.stereotype.Service;
@@ -16,13 +18,13 @@ import java.util.stream.Collectors;
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
+    private final StudyCheckRepository studyCheckRepository;
 
     @Override
-    public int insertStudyUser(List<StudyUserDTO> users) {
+    public void insertStudyUser(List<StudyUserDTO> users) {
         for (StudyUserDTO dto : users) {
             StudyUser entity = studyRepository.save(dto.toInsertEntity());
         }
-        return 1;
     }
 
     @Override
@@ -30,6 +32,13 @@ public class StudyServiceImpl implements StudyService {
         return studyRepository.findAll().stream()
                 .map(StudyUserDTO::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void insetStudyChecked(List<Long> studyChecked) {
+        for (Long id : studyChecked) {
+            studyCheckRepository.save(StudyCheck.toEntity(id));
+        }
     }
 
 
