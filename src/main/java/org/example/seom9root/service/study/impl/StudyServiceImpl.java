@@ -10,6 +10,7 @@ import org.example.seom9root.service.study.StudyService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +45,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public List<StudyUserDTO> getStudyUsersWithChecked() {
         return studyRepository.findAllStudyUsers().stream()
+                .sorted(Comparator.comparing(StudyUser::getName)) // 순서 정렬
                 .map(StudyUserDTO::fromEntity)
                 .collect(Collectors.toList());
 

@@ -18,7 +18,7 @@ public class StudyController {
     
     @RequestMapping("/userList")
     public String userList(Model model) {
-        List<StudyUserDTO> users = studyService.getStudyUsers();
+        List<StudyUserDTO> users = studyService.getStudyUsersWithChecked();
         model.addAttribute("users", users);
         return "/study/list";
     }
