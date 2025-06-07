@@ -9,7 +9,6 @@ import org.example.seom9root.repository.study.StudyRepository;
 import org.example.seom9root.service.study.StudyService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +23,7 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public void insertStudyUser(List<StudyUserDTO> users) {
         for (StudyUserDTO dto : users) {
-            StudyUser entity = studyRepository.save(dto.toInsertEntity());
+            studyRepository.save(dto.toInsertEntity());
         }
     }
 
