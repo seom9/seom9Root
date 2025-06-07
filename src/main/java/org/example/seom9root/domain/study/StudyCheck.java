@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +25,10 @@ public class StudyCheck {
     private StudyUser studyUser;
 
     private LocalDateTime createdAt;
+
+    public boolean isTodayCheck() {
+        return createdAt != null && createdAt.toLocalDate().isEqual(LocalDate.now());
+    }
 
     public static StudyCheck toEntity(Long id) {
         StudyUser userRef = StudyUser.builder()

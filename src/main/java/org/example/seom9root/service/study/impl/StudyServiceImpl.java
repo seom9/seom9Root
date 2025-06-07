@@ -41,5 +41,11 @@ public class StudyServiceImpl implements StudyService {
         }
     }
 
+    @Override
+    public List<StudyUserDTO> getStudyUsersWithChecked() {
+        return studyRepository.findAllStudyUsers().stream()
+                .map(StudyUserDTO::fromEntity)
+                .collect(Collectors.toList());
 
+    }
 }

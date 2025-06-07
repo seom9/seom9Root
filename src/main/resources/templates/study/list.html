@@ -175,7 +175,7 @@
       <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}"></td>
       <td>
         <label>
-          <input type="checkbox" class="attendance-check" th:value="${user.id}">
+          <input type="checkbox" class="attendance-check" th:value="${user.id}" th:checked="${user.todayCheck}">
         </label>
       </td>
     </tr>
@@ -184,7 +184,7 @@
 
 <!-- 출석 체크 버튼 : 테이블 아래, 오른쪽 정렬 -->
 <div style="width: 80%; margin: 16px auto 0 auto; text-align: right;">
-  <button id="submitCheckToday" onclick="studyCheck()" class="study-check-button">
+  <button id="submitCheckToday" onclick="studyCheck()" class="study-check-button" style="display: inline-block;">
     출석 체크
   </button>
 </div>
@@ -222,6 +222,7 @@
 
     tbody.appendChild(row);
     updateSubmitAllVisibility(); // ← 추가
+    updateCheckButtonUnvisibility();
   }
 
   function deleteRow(button) {
@@ -241,9 +242,9 @@
     }
   }
 
-  function updateCheckButtonVisibility() {
+  function updateCheckButtonUnvisibility() {
     const inputRows = document.querySelectorAll('.insert-input-row');
-    const checkedBtn = document.getElementById('study-check-button');
+    const checkedBtn = document.getElementById('submitCheckToday');
 
     if (inputRows.length > 0) {
       checkedBtn.style.display = 'none';

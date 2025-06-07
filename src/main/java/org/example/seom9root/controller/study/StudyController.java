@@ -19,7 +19,7 @@ public class StudyController {
     @RequestMapping("/userList")
     public String userList(Model model) {
         List<StudyUserDTO> users = studyService.getStudyUsers();
-        model.addAttribute("users", users); // 👈 뷰에 전달
+        model.addAttribute("users", users);
         return "/study/list";
     }
 }

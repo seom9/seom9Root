@@ -11,4 +11,6 @@ public interface StudyService {
     public List<StudyUserDTO> getStudyUsers();
 
     public void insetStudyChecked(List<Long> checkedIds);
+
+    public List<StudyUserDTO> getStudyUsersWithChecked();
 }

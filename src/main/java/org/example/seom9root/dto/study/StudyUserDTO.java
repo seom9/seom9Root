@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.example.seom9root.common.Common;
+import org.example.seom9root.domain.study.StudyCheck;
 import org.example.seom9root.domain.study.StudyUser;
 
 import java.time.LocalDate;
@@ -24,6 +25,8 @@ public class StudyUserDTO {
 
     private String jobTitle;
 
+    private boolean todayCheck;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -31,12 +34,16 @@ public class StudyUserDTO {
     private LocalDateTime deletedAt;
 
     public static StudyUserDTO fromEntity(StudyUser studyUser) {
+        boolean todayChecked = studyUser.getStudyChecks().stream()
+                .anyMatch(StudyCheck::isTodayCheck);
+
         return StudyUserDTO.builder()
                 .id(studyUser.getId())
                 .name(studyUser.getName())
                 .gitHub(studyUser.getGitHub())
                 .careerYear(studyUser.getCareerYear())
                 .jobTitle(studyUser.getJobTitle())
+                .todayCheck(todayChecked)
                 .createdAt(studyUser.getCreatedAt())
                 .updatedAt(studyUser.getUpdatedAt())
                 .deletedAt(studyUser.getDeletedAt())
@@ -64,5 +71,7 @@ public class StudyUserDTO {
                 .deletedAt(this.deletedAt)
                 .build();
     }
+
+
 
 }
