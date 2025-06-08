@@ -27,7 +27,7 @@ public class StudyUserDTO {
 
     private boolean todayCheck;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     private LocalDateTime updatedAt;
 
@@ -44,7 +44,7 @@ public class StudyUserDTO {
                 .careerYear(studyUser.getCareerYear())
                 .jobTitle(studyUser.getJobTitle())
                 .todayCheck(todayChecked)
-                .createdAt(studyUser.getCreatedAt())
+                .createdAt(Common.formatDashedDate(studyUser.getCreatedAt()))
                 .updatedAt(studyUser.getUpdatedAt())
                 .deletedAt(studyUser.getDeletedAt())
                 .build();
@@ -56,22 +56,8 @@ public class StudyUserDTO {
                 .gitHub(this.gitHub)
                 .careerYear(this.careerYear)
                 .jobTitle(this.jobTitle)
-                .createdAt(LocalDateTime.now())
+                .createdAt(Common.parseDashedDateTime(this.createdAt))
                 .build();
     }
-
-    public StudyUser toEntity() {
-        return StudyUser.builder()
-                .name(this.name)
-                .gitHub(this.gitHub)
-                .careerYear(this.careerYear)
-                .jobTitle(this.jobTitle)
-                .createdAt(this.createdAt)
-                .updatedAt(this.updatedAt)
-                .deletedAt(this.deletedAt)
-                .build();
-    }
-
-
 
 }

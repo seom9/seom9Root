@@ -6,12 +6,18 @@ import java.time.format.DateTimeFormatter;
 
 public class Common {
 
-    private static final DateTimeFormatter DASHED_FORMATTER = DateTimeFormatter.ofPattern("yyyy - MM - dd");
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final DateTimeFormatter DASHED_FORMATTER = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
-    // LocalDate를 "0000 - 00 - 00" 포맷으로 변경
-    public static String formatDashedDate(LocalDate date) {
+    // LocalDate → "yyyy-MM-dd" 포맷 문자열
+    public static String formatDashedDate(LocalDateTime date) {
         if (date == null) return "";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy - MM - dd");
-        return date.format(formatter);
+        return date.format(DASHED_FORMATTER);
+    }
+
+    // "yyyy-MM-dd" 문자열 → LocalDateTime (00:00:00 기준)
+    public static LocalDateTime parseDashedDateTime(String date) {
+        if (date == null) return null;
+        return LocalDate.parse(date, DASHED_FORMATTER).atStartOfDay();
     }
 }

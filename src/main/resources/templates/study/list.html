@@ -172,7 +172,7 @@
       <td th:text="${user.gitHub}"></td>
       <td th:text="${user.careerYear}"></td>
       <td th:text="${user.jobTitle}"></td>
-      <td th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}"></td>
+      <td th:text="${user.createdAt}"></td>
       <td>
         <label>
           <input type="checkbox" class="attendance-check" th:value="${user.id}" th:checked="${user.todayCheck}">
@@ -263,8 +263,9 @@
       const gitHub = row.querySelector('[name="gitHub"]').value.trim();
       const careerYear = parseInt(row.querySelector('[name="careerYear"]').value.trim());
       const jobTitle = row.querySelector('[name="jobTitle"]').value.trim();
+      const createdAt = row.querySelector('[name="createdAt"]').value.trim();
 
-      if (!name || !gitHub || isNaN(careerYear) || !jobTitle) {
+      if (!name || !gitHub || isNaN(careerYear) || !jobTitle || !createdAt) {
         alert("모든 입력란을 채워주세요!");
         return;
       }
@@ -273,7 +274,8 @@
         name,
         gitHub,
         careerYear,
-        jobTitle
+        jobTitle,
+        createdAt
       });
     }
 
