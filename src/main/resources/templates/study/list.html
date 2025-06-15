@@ -286,7 +286,7 @@
     })
     .then(response => {
       if (response.ok) {
-        alert("저장 완료!");
+        alert("저장 완료!!");
         location.reload(); // 또는 append 방식으로도 가능
       } else {
         return response.text().then(msg => { throw new Error(msg); });
