@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .login-btn, .band-btn {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .login-btn {
+            background-color: #10b2bb;
+            color: #fff;
+            margin-top: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background-color: #0e97a0;
+        }
+
+        .band-btn {
+            background-color: #00c300;
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .band-btn:hover {
+            background-color: #00a000;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 1.5rem 0 0.5rem;
+            font-size: 0.85rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>로그인</h2>
+    <form method="POST" action="/login">
+        <div class="form-group">
+            <label for="username">아이디</label>
+            <input type="text" id="username" name="username" required />
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required />
+        </div>
+        <button type="submit" class="login-btn">로그인</button>
+    </form>
+
+    <div class="or-divider">또는</div>
+
+    <a href="https://auth.band.us/oauth2/authorize?response_type=code&client_id=461523710&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fbamboo%2Finsert">
+        <button class="band-btn">BAND로 로그인</button>
+    </a>
+</div>
+</body>
+</html>
